@@ -1,20 +1,27 @@
 import "../App.css";
 import { difficultyService } from "../services/difficultyService";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Word from "../components/word/Word";
 
 const Home = () => {
-  useEffect(() => {
-    const testDifficulties = async () => {
-      const difficulties = await difficultyService.getDifficulties();
-      console.log("Difficulties:", difficulties);
-    };
+  const [word, setWord] = useState<string>("");
 
-    testDifficulties();
-  }, []);
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setWord(event.target.value);
+  };
+
+  // useEffect(() => {
+  // }, []);
 
   return (
     <div className="home-container">
-      <p>Esta es mi home</p>
+      <input
+        type="text"
+        placeholder="Insert a word"
+        value={word}
+        onChange={handleInputChange}
+      />
+      <Word word={word} />
     </div>
   );
 };
