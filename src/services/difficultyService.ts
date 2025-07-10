@@ -1,5 +1,4 @@
 import axios, { AxiosError, type AxiosResponse } from "axios";
-import { API_CONFIG } from "../config/api";
 import type { Difficulty, ApiError } from "../types/api";
 
 export const difficultyService = {
@@ -20,7 +19,7 @@ export const difficultyService = {
   async getDifficulties(): Promise<Difficulty[]> {
     try {
       const response: AxiosResponse<Difficulty[]> = await axios.get(
-        `${API_CONFIG.baseURL}/api/difficulties`
+        `/api/difficulties`
       );
       return response.data;
     } catch (error) {

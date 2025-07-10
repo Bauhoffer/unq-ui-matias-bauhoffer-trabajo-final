@@ -1,5 +1,4 @@
 import axios, { AxiosError, type AxiosResponse } from "axios";
-import { API_CONFIG } from "../config/api";
 import type { CheckWordRequest, CheckWordResponse, ApiError } from "../types/api";
 
 export const checkWordService = {
@@ -12,7 +11,7 @@ export const checkWordService = {
   async checkWord(request: CheckWordRequest): Promise<CheckWordResponse> {
     try {
       const response: AxiosResponse<CheckWordResponse> = await axios.post(
-        `${API_CONFIG.baseURL}/api/check-word`,
+        `/api/checkWord`,
         request
       );
       return response.data;

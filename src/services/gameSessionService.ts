@@ -1,12 +1,11 @@
 import axios, { AxiosError, type AxiosResponse } from "axios";
-import { API_CONFIG } from "../config/api";
 import type { GameSession, ApiError } from "../types/api";
 
 export const gameSessionService = {
   async getGameSession(id: string): Promise<GameSession> {
     try {
       const response: AxiosResponse<GameSession> = await axios.get(
-        `${API_CONFIG.baseURL}/api/difficulties/${id}`
+        `/api/difficulties/${id}`
       );
       return response.data;
     } catch (error) {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { GameGrid } from "../../components/gameGrid/GameGrid";
 import { Keyboard } from "../../components/keyboard/Keyboard";
 import { checkWordService } from "../../services/checkWordService";
@@ -17,17 +17,18 @@ interface Attempt {
   result?: CheckWordResponse;
 }
 
+type GameStatus = "playing" | "won" | "lost";
+
 const Game = () => {
   const [currentWord, setCurrentWord] = useState<string>("");
   const [attempts, setAttempts] = useState<Attempt[]>([]);
   const [gameSession, setGameSession] = useState<GameSession | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [gameStatus, setGameStatus] = useState<"playing" | "won" | "lost">(
-    "playing"
-  );
+  const [gameStatus, setGameStatus] = useState<GameStatus>("playing");
 
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const difficultyId = searchParams.get("difficulty");
 
   const maxAttemps = 6;
@@ -73,30 +74,29 @@ const Game = () => {
 
     if (
       currentWord.length === gameSession.wordLenght &&
-      attempts.length < maxAttemps
+      attempts.length < maxAttemps //revisar si corta con 5 o 6 intentos
     ) {
       try {
         const request: CheckWordRequest = {
           sessionId: gameSession.sessionId,
-          word: currentWord,
+          word: currentWord.toLowerCase(),
         };
+        console.log("Request", request);
 
         const result = await checkWordService.checkWord(request);
-
+        console.log("Resultado del intento:", result);
         // Agregar el intento con su resultado
         const newAttempt = { word: currentWord, result };
         setAttempts((prev) => [...prev, newAttempt]);
         setCurrentWord("");
 
-        // Verificar si ganó
         const isWinner = result.every(
           (letter) => letter.solution === SOLUTION.CORRECT
         );
         if (isWinner) {
           setGameStatus("won");
           console.log("¡Ganaste!");
-        } else if (attempts.length + 1 > maxAttemps) {
-          // Verificar si perdió
+        } else if (attempts.length + 1 >= maxAttemps) {
           setGameStatus("lost");
           console.log("Game Over");
         }
@@ -110,15 +110,31 @@ const Game = () => {
     }
   };
 
-  const handlePlayAgain = () => {
-    setCurrentWord("");
-    setAttempts([]);
-    setGameStatus("playing");
-    setError(null);
+  const handlePlayAgain = async () => {
+    if (!difficultyId) return;
+    
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const newSession = await gameSessionService.getGameSession(difficultyId);
+      setGameSession(newSession);
+      
+      setCurrentWord("");
+      setAttempts([]);
+      setGameStatus("playing");
+      
+      console.log("New game session created:", newSession);
+    } catch (error) {
+      setError("Error al iniciar un nuevo juego");
+      console.error("Error creating new game session:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleBackToMenu = () => {
-    window.history.back();
+    navigate('/');
   };
 
   if (loading) {

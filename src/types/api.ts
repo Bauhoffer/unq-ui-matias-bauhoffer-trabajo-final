@@ -17,7 +17,7 @@ export interface Difficulty {
  * ```json
  * {
  *   "sessionId": "abc123-def456",
- *   "difficulty": { "id": "medium", "name": "Medium" },
+ *   "difficulty": { "id": 2, "name": "Medium" },
  *   "wordLength": 5
  * }
  * ```
