@@ -1,0 +1,45 @@
+.key {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 45px;
+  padding: 0 8px;
+  margin: 2px;
+  background-color: #d3d6da;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.1s ease;
+}
+
+.key:hover {
+  background-color: #bbbfc3;
+}
+
+.key:active {
+  background-color: #a8acb1;
+}
+
+.key-normal {
+  width: 40px;
+}
+
+.key-wide {
+  width: 65px;
+  font-size: 12px;
+  text-transform: none;
+}
+
+.key-special {
+  background-color: #818384;
+  color: white;
+}
+
+.key-special:hover {
+  background-color: #6e7071;
+}

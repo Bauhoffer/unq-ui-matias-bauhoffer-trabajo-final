@@ -1,0 +1,16 @@
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 20px;
+  background-color: transparent;
+  user-select: none;
+}
+
+.keyboard-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}

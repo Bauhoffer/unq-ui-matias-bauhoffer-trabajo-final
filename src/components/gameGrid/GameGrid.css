@@ -1,0 +1,12 @@
+.game-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 20px;
+}
+
+.grid-row {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
