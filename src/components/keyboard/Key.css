@@ -6,7 +6,7 @@
   height: 45px;
   padding: 0 8px;
   margin: 2px;
-  background-color: #d3d6da;
+  background-color: #4c5766;
   border: none;
   border-radius: 4px;
   font-size: 14px;
@@ -18,15 +18,16 @@
 }
 
 .key:hover {
-  background-color: #bbbfc3;
+  background-color: #6b7177;
 }
 
 .key:active {
   background-color: #a8acb1;
 }
 
-.key-normal {
-  width: 40px;
+.key-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .key-wide {
@@ -36,10 +37,64 @@
 }
 
 .key-special {
-  background-color: #818384;
+  background-color: #7a8083;
   color: white;
 }
 
 .key-special:hover {
   background-color: #6e7071;
+}
+
+@media (max-width: 768px) {
+  .key {
+    min-width: 35px;
+    height: 40px;
+    font-size: 13px;
+    padding: 0 6px;
+    margin: 1px;
+  }
+
+  .key-wide {
+    width: 60px;
+  }
+
+  .key-special {
+    width: 55px;
+  }
+}
+
+@media (max-width: 480px) {
+  .key {
+    min-width: 30px;
+    height: 35px;
+    font-size: 12px;
+    padding: 0 4px;
+    margin: 1px;
+  }
+
+  .key-wide {
+    width: 50px;
+  }
+
+  .key-special {
+    width: 45px;
+  }
+}
+
+@media (max-width: 320px) {
+  .key {
+    min-width: 26px;
+    height: 32px;
+    font-size: 11px;
+    padding: 0 3px;
+    margin: 0.5px;
+  }
+
+  .key-wide {
+    width: 42px;
+  }
+
+  .key-special {
+    width: 38px;
+  }
 }

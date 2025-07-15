@@ -1,0 +1,93 @@
+.game-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+}
+
+.game-header-icons {
+  width: 2.6rem;
+  height: 2.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 8px;
+  filter: invert(1);
+}
+
+.game-header-icons:hover {
+  background-color: #cccccc;
+}
+
+.game-loading,
+.game-error {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  text-align: center;
+}
+
+.game-error h2 {
+  color: #dc2626;
+  margin-bottom: 8px;
+}
+
+.game-error p {
+  color: #6b7280;
+  margin-bottom: 16px;
+}
+
+.game-error button {
+  padding: 8px 16px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.game-error button:hover {
+  background-color: #2563eb;
+}
+
+.toast {
+  word-break: 'break-word';
+}
+
+@media (max-width: 768px) {
+  .toast {
+    width: 40%;
+  }
+}
+
+@media (max-width: 480px) {
+  .toast {
+    width: 220px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 320px) {
+  .toast {
+    width: 170px;
+    font-size: 12px;
+    padding: 0 !important;
+  }
+}

@@ -1,0 +1,40 @@
+.game-rules-container {
+  color: white;
+  font-size: 1rem;
+  margin: 0 0 0.2rem 0;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.game-rules-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 30px;
+}
+
+.game-rules-color-code {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+@media (max-width: 1024px) {
+  .game-rules-container {
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .game-rules-container {
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-rules-container {
+    padding: 0 30px;
+    font-size: 14px;
+  }
+}

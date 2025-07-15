@@ -3,7 +3,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 70%;
+  height: 90%;
+  width: 90%;
+}
+.menu-title {
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  border-bottom: 2px solid #666;
+  color: #333;
 }
 
 .difficulty-options {
@@ -17,12 +24,73 @@
 }
 
 .difficulty-options button {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
+  width: 60%;
+  padding: 14px 0;
+  font-size: 1rem;
   cursor: pointer;
   border: none;
   border-radius: 5px;
-  background-color: #4CAF50;
-  color: white;
+  background-color: #633681;
+  color: #ffffff;
+}
+
+.difficulty-options button:hover {
+  background-color: #059669;
+}
+
+@media (max-width: 1024px) {
+  .menu-title {
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+  }
+
+  .difficulty-options button {
+    width: 60%;
+    padding: 12px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .difficulty-options button {
+    width: 60%;
+    font-size: 1rem;
+    padding: 10px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-title {
+    font-size: 1.7rem;
+    margin-bottom: 1rem;
+  }
+
+  .difficulty-options button {
+    width: 55%;
+    font-size: 1rem;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 375px) {
+  .menu-container {
+    width: 100%;
+    height: 100%;
+    padding: 0 30px;
+  }
+
+  .menu-title {
+    font-size: 1.3rem;
+    margin-bottom: 0;
+  }
+
+  .difficulty-options button {
+    width: 75%;
+    font-size: 14px;
+    padding: 8px;
+  }
 }

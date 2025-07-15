@@ -1,5 +1,6 @@
-import axios, { AxiosError, type AxiosResponse } from "axios";
-import type { Difficulty, ApiError } from "../types/api";
+import axios, { type AxiosResponse } from "axios";
+import type { Difficulty } from "../types/api";
+import { handleApiError } from "./errorHandler";
 
 export const difficultyService = {
   /**
@@ -23,15 +24,7 @@ export const difficultyService = {
       );
       return response.data;
     } catch (error) {
-      if (error instanceof AxiosError) {
-        const apiError: ApiError = {
-          message: error.response?.data?.message || error.message,
-          status: error.response?.status,
-          code: error.code,
-        };
-        throw apiError;
-      }
-      throw { message: "Unknown error" } as ApiError;
+      throw handleApiError(error);
     }
   },
 };

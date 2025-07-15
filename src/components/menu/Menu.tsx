@@ -1,12 +1,13 @@
-import './Menu.css';
-import { useNavigate } from 'react-router-dom';
+import "./Menu.css";
+import { useNavigate } from "react-router-dom";
 import type { Difficulty } from "../../types/api";
 
 interface MenuProps {
   difficulties: Difficulty[];
+  title: string;
 }
 
-export const Menu = ({ difficulties }: MenuProps) => {
+export const Menu = ({ difficulties, title }: MenuProps) => {
   const navigate = useNavigate();
 
   const handleDifficultySelect = (difficulty: Difficulty) => {
@@ -15,11 +16,11 @@ export const Menu = ({ difficulties }: MenuProps) => {
 
   return (
     <div className="menu-container">
-      <h1>Elegí tu dificultad</h1>
+      <h1 className="menu-title">{title}</h1>
       <div className="difficulty-options">
         {difficulties.map((difficulty) => (
-          <button 
-            key={difficulty.id} 
+          <button
+            key={difficulty.id}
             onClick={() => handleDifficultySelect(difficulty)}
           >
             {difficulty.name}

@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { GameGrid } from "../../components/gameGrid/GameGrid";
 import { Keyboard } from "../../components/keyboard/Keyboard";
+import GameOverModal from "../../components/modal/gameOverModal/GameOverModal";
+import RulesModal from "../../components/modal/rulesModal/RulesModal";
 import { checkWordService } from "../../services/checkWordService";
 import { gameSessionService } from "../../services/gameSessionService";
 import type {
@@ -11,7 +13,10 @@ import type {
 } from "../../types/api";
 import "./Game.css";
 import { SOLUTION } from "../../types/solution";
-
+import goBackIcon from "../../assets/left-arrow-circle.svg";
+import rulesIcon from "../../assets/question-circle.svg";
+import type { HandledApiError } from "../../services/errorHandler";
+import toast, { Toaster } from "react-hot-toast";
 interface Attempt {
   word: string;
   result?: CheckWordResponse;
@@ -26,6 +31,9 @@ const Game = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [gameStatus, setGameStatus] = useState<GameStatus>("playing");
+  const [showModal, setShowModal] = useState(false);
+  const [showRulesModal, setShowRulesModal] = useState(false);
+  const [isCheckingWord, setIsCheckingWord] = useState(false);
 
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -50,7 +58,16 @@ const Game = () => {
         setError(null);
         setGameStatus("playing");
         console.log("Game session created:", session);
-      } catch (_) {
+      } catch (error) {
+        const err = error as HandledApiError;
+        if (
+          err?.statusCode === 404 &&
+          err.message.includes("Difficulty not found")
+        ) {
+          console.error("Error initializing game:", error);
+          setError("Dificultad no encontrada");
+          return;
+        }
       } finally {
         setLoading(false);
       }
@@ -70,13 +87,14 @@ const Game = () => {
   };
 
   const handleEnter = async () => {
-    if (!gameSession || gameStatus !== "playing") return;
+    if (!gameSession || gameStatus !== "playing" || isCheckingWord) return;
 
     if (
       currentWord.length === gameSession.wordLenght &&
-      attempts.length < maxAttemps //revisar si corta con 5 o 6 intentos
+      attempts.length < maxAttemps
     ) {
       try {
+        setIsCheckingWord(true);
         const request: CheckWordRequest = {
           sessionId: gameSession.sessionId,
           word: currentWord.toLowerCase(),
@@ -85,7 +103,6 @@ const Game = () => {
 
         const result = await checkWordService.checkWord(request);
         console.log("Resultado del intento:", result);
-        // Agregar el intento con su resultado
         const newAttempt = { word: currentWord, result };
         setAttempts((prev) => [...prev, newAttempt]);
         setCurrentWord("");
@@ -93,14 +110,39 @@ const Game = () => {
         const isWinner = result.every(
           (letter) => letter.solution === SOLUTION.CORRECT
         );
+
         if (isWinner) {
           setGameStatus("won");
-          console.log("¡Ganaste!");
+          setShowModal(true);
         } else if (attempts.length + 1 >= maxAttemps) {
           setGameStatus("lost");
-          console.log("Game Over");
+          setShowModal(true);
         }
-      } catch (_) {}
+      } catch (error) {
+        const err = error as HandledApiError;
+        if (
+          err?.statusCode === 400 &&
+          err.message.includes("Invalid request")
+        ) {
+          toast.error(
+            "Uy, parece que algo salió mal. Intentalo de nuevo por favor."
+          );
+        }
+        if (
+          err?.statusCode === 404 &&
+          err.message.includes("Session not found")
+        ) {
+          toast.error(
+            "Uy, parece que algo salió mal. Intentalo de nuevo por favor."
+          );
+        }
+        if (err?.statusCode === 400 && err.message.includes("Incorrect word")) {
+          toast.error("Esa palabra no existe. Intenta con otra.");
+        }
+        console.error("Error checking word:", error);
+      } finally {
+        setIsCheckingWord(false);
+      }
     }
   };
 
@@ -112,29 +154,57 @@ const Game = () => {
 
   const handlePlayAgain = async () => {
     if (!difficultyId) return;
-    
+
     try {
       setLoading(true);
       setError(null);
-      
+      setShowModal(false);
+
       const newSession = await gameSessionService.getGameSession(difficultyId);
       setGameSession(newSession);
-      
+
       setCurrentWord("");
       setAttempts([]);
       setGameStatus("playing");
-      
+
       console.log("New game session created:", newSession);
     } catch (error) {
-      setError("Error al iniciar un nuevo juego");
+      const err = error as HandledApiError;
+      if (
+        err?.statusCode === 404 &&
+        err.message.includes("Difficulty not found")
+      ) {
+        console.error("Error initializing game:", error);
+        setError("Dificultad no encontrada");
+        return;
+      }
       console.error("Error creating new game session:", error);
     } finally {
       setLoading(false);
     }
   };
 
+  const resetGameSession = () => {
+    setCurrentWord("");
+    setAttempts([]);
+    setGameSession(null);
+    setError(null);
+    setGameStatus("playing");
+    setShowModal(false);
+    setShowRulesModal(false);
+  };
+
   const handleBackToMenu = () => {
-    navigate('/');
+    resetGameSession();
+    navigate("/difficulty");
+  };
+
+  const handleShowRules = () => {
+    setShowRulesModal(true);
+  };
+
+  const handleCloseRulesModal = () => {
+    setShowRulesModal(false);
   };
 
   if (loading) {
@@ -168,19 +238,23 @@ const Game = () => {
   return (
     <div className="game-container">
       <div className="game-header">
-        <h2>Dificultad: {gameSession.difficulty.name}</h2>
-        <p>
-          Palabras de {gameSession.wordLenght} letras - {maxAttemps} intentos
-        </p>
-        {gameStatus !== "playing" && (
-          <div className="game-status">
-            {gameStatus === "won" ? (
-              <div className="status-won">¡Felicitaciones! ¡Ganaste!</div>
-            ) : (
-              <div className="status-lost">Game Over</div>
-            )}
-          </div>
-        )}
+        <img
+          src={goBackIcon}
+          alt="go back"
+          className="game-header-icons"
+          onClick={handleBackToMenu}
+        />
+        <Toaster
+          toastOptions={{
+            className: "toast"
+          }}
+        />
+        <img
+          src={rulesIcon}
+          alt="game rules"
+          className="game-header-icons"
+          onClick={handleShowRules}
+        />
       </div>
 
       <GameGrid
@@ -194,18 +268,17 @@ const Game = () => {
         onKeyPress={handleKeyPress}
         onEnter={handleEnter}
         onBackspace={handleBackspace}
+        isLoading={isCheckingWord}
       />
 
-      {gameStatus !== "playing" && (
-        <div className="game-actions">
-          <button onClick={handlePlayAgain} className="btn-play-again">
-            Jugar de nuevo
-          </button>
-          <button onClick={handleBackToMenu} className="btn-back-menu">
-            Volver al menú
-          </button>
-        </div>
-      )}
+      <GameOverModal
+        isOpen={showModal}
+        isWinner={gameStatus === "won"}
+        onPlayAgain={handlePlayAgain}
+        onBackToMenu={handleBackToMenu}
+      />
+
+      <RulesModal isOpen={showRulesModal} onClose={handleCloseRulesModal} />
     </div>
   );
 };

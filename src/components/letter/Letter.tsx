@@ -12,13 +12,13 @@ export const Letter = ({ char, solution, isEmpty = false }: LetterProps) => {
     let className = 'letter';
     
     if (isEmpty) {
-      className += ' letter--empty';
+      className += ' letter-empty';
     } else if (solution) {
-      className += ` letter--${solution}`;
+      className += ` letter-${solution}`;
     } else if (char) {
-      className += ' letter--pending';
+      className += ' letter-pending';
     } else {
-      className += ' letter--empty';
+      className += ' letter-empty';
     }
     
     return className;

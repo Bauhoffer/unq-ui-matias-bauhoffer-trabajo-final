@@ -1,10 +1,10 @@
-import './Home.css'
+import "./DifficultyMenu.css";
 import { useState, useEffect } from "react";
 import { Menu } from "../../components/menu/Menu";
 import { difficultyService } from "../../services/difficultyService";
 import type { ApiError, Difficulty } from "../../types/api";
 
-const Home = () => {
+const DifficultyMenu = () => {
   const [difficulties, setDifficulties] = useState<Difficulty[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -17,8 +17,8 @@ const Home = () => {
         setDifficulties(data);
       } catch (error) {
         const apiError = error as ApiError;
-        setError(apiError.message || 'Error al cargar dificultades');
-        console.error('Error fetching difficulties:', error);
+        setError(apiError.message || "Error al cargar dificultades");
+        console.error("Error fetching difficulties:", error);
       } finally {
         setLoading(false);
       }
@@ -31,10 +31,10 @@ const Home = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className='home-container'>
-      <Menu difficulties={difficulties} />
+    <div className="difficulty-menu-container">
+      <Menu difficulties={difficulties} title="Elegí tu dificultad" />
     </div>
   );
 };
 
-export default Home;
+export default DifficultyMenu;

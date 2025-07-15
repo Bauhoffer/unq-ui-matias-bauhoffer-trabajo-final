@@ -1,0 +1,33 @@
+.difficulty-menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 500px;
+  height: 500px;
+  border-radius: 10px;
+  background-color: #7d787e;
+}
+
+@media (max-width: 768px) {
+  .difficulty-menu-container {
+    width: 400px;
+    height: 450px;
+  }
+}
+
+@media (max-width: 480px) {
+  .difficulty-menu-container {
+    width: 310px;
+    height: 340px;
+  }
+  
+}
+
+@media (max-width: 375px) {
+  .difficulty-menu-container {
+    width: 240px;
+    height: 250px;
+  }
+  
+}
