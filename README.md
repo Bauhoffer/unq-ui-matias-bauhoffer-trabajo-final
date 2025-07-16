@@ -29,5 +29,5 @@ Una vez iniciado el servidor, Vite mostrará una URL como esta en la terminal:
 Local: http://localhost:5173/
 ```
 
-Abrí esa dirección en tu navegador web.
-⚠️ Si se muestra otro puerto, usá la URL que te indique la terminal.
+Abrí esa dirección en tu navegador web. <br>
+⚠️Si se muestra otro puerto, usá la URL que te indique la terminal.
