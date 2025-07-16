@@ -2,15 +2,15 @@ import "./Error.css";
 
 type errorProps = {
   errorMessage: string;
-  handleBackToMenu: () => void;
+  actionButton: () => void;
 };
 
-const Error = ({ errorMessage, handleBackToMenu }: errorProps) => {
+const Error = ({ errorMessage, actionButton }: errorProps) => {
   return (
     <div className="error-container">
       <h2>Error</h2>
       <p>{errorMessage}</p>
-      <button onClick={handleBackToMenu} className="error-action-button">Volver al menú</button>
+      <button onClick={actionButton} className="error-action-button">Volver al menú</button>
     </div>
   );
 };

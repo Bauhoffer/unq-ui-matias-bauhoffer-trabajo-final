@@ -31,7 +31,7 @@ export function handleApiError(error: unknown): HandledApiError {
           isHandled: true,
         };
       case 404:
-        return { message: "No encontrado", statusCode: 404, isHandled: true };
+        return { message: message || "No encontrado", statusCode: 404, isHandled: true };
       case 500:
         return {
           message: "Error interno del servidor",

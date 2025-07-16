@@ -97,10 +97,8 @@ const Game = () => {
           sessionId: gameSession.sessionId,
           word: currentWord.toLowerCase(),
         };
-        console.log("Request", request);
 
         const result = await checkWordService.checkWord(request);
-        console.log("Resultado del intento:", result);
         const newAttempt = { word: currentWord, result };
         setAttempts((prev) => [...prev, newAttempt]);
         setCurrentWord("");
@@ -207,7 +205,7 @@ const Game = () => {
   if (error) {
     return (
       <div className="game-container">
-        <Error errorMessage={error} handleBackToMenu={handleBackToMenu} />
+        <Error errorMessage={error} actionButton={handleBackToMenu} />
       </div>
     );
   }
@@ -215,7 +213,7 @@ const Game = () => {
   if (!gameSession) {
     return (
       <div className="game-container">
-        <Error errorMessage={"No se pudo cargar la sesión de juego."} handleBackToMenu={handleBackToMenu} />
+        <Error errorMessage={"No se pudo cargar la sesión de juego."} actionButton={handleBackToMenu} />
       </div>
     );
   }
