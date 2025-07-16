@@ -29,11 +29,10 @@
 }
 
 .game-header-icons:hover {
-  background-color: #cccccc;
+  background-color: var(--header-icon-bg-hover);
 }
 
-.game-loading,
-.game-error {
+.game-loading {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -41,30 +40,6 @@
   min-height: 100vh;
   padding: 20px;
   text-align: center;
-}
-
-.game-error h2 {
-  color: #dc2626;
-  margin-bottom: 8px;
-}
-
-.game-error p {
-  color: #6b7280;
-  margin-bottom: 16px;
-}
-
-.game-error button {
-  padding: 8px 16px;
-  background-color: #3b82f6;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.game-error button:hover {
-  background-color: #2563eb;
 }
 
 .toast {

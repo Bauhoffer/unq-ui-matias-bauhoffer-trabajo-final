@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { GameGrid } from "../../components/gameGrid/GameGrid";
 import { Keyboard } from "../../components/keyboard/Keyboard";
+import Error from "../../components/error/Error";
 import GameOverModal from "../../components/modal/gameOverModal/GameOverModal";
 import RulesModal from "../../components/modal/rulesModal/RulesModal";
 import { checkWordService } from "../../services/checkWordService";
@@ -44,7 +45,7 @@ const Game = () => {
   useEffect(() => {
     const initializeGame = async () => {
       if (!difficultyId) {
-        setError("No se especificó una dificultad");
+        setError("No se especificó una dificultad.");
         setLoading(false);
         return;
       }
@@ -57,16 +58,13 @@ const Game = () => {
         setAttempts([]);
         setError(null);
         setGameStatus("playing");
-        console.log("Game session created:", session);
       } catch (error) {
         const err = error as HandledApiError;
         if (
           err?.statusCode === 404 &&
           err.message.includes("Difficulty not found")
         ) {
-          console.error("Error initializing game:", error);
-          setError("Dificultad no encontrada");
-          return;
+          setError("Dificultad no encontrada.");
         }
       } finally {
         setLoading(false);
@@ -124,22 +122,17 @@ const Game = () => {
           err?.statusCode === 400 &&
           err.message.includes("Invalid request")
         ) {
-          toast.error(
-            "Uy, parece que algo salió mal. Intentalo de nuevo por favor."
-          );
+          setError("Uy, parece que algo salió mal. Intentalo de nuevo por favor.");
         }
         if (
           err?.statusCode === 404 &&
           err.message.includes("Session not found")
         ) {
-          toast.error(
-            "Uy, parece que algo salió mal. Intentalo de nuevo por favor."
-          );
+          setError("Uy, parece que algo salió mal. Intentalo de nuevo por favor.");
         }
         if (err?.statusCode === 400 && err.message.includes("Incorrect word")) {
           toast.error("Esa palabra no existe. Intenta con otra.");
         }
-        console.error("Error checking word:", error);
       } finally {
         setIsCheckingWord(false);
       }
@@ -166,19 +159,15 @@ const Game = () => {
       setCurrentWord("");
       setAttempts([]);
       setGameStatus("playing");
-
-      console.log("New game session created:", newSession);
     } catch (error) {
       const err = error as HandledApiError;
       if (
         err?.statusCode === 404 &&
         err.message.includes("Difficulty not found")
       ) {
-        console.error("Error initializing game:", error);
-        setError("Dificultad no encontrada");
+        setError("Dificultad no encontrada.");
         return;
       }
-      console.error("Error creating new game session:", error);
     } finally {
       setLoading(false);
     }
@@ -218,11 +207,7 @@ const Game = () => {
   if (error) {
     return (
       <div className="game-container">
-        <div className="game-error">
-          <h2>Error</h2>
-          <p>{error}</p>
-          <button onClick={handleBackToMenu}>Volver al menú</button>
-        </div>
+        <Error errorMessage={error} handleBackToMenu={handleBackToMenu} />
       </div>
     );
   }
@@ -230,7 +215,7 @@ const Game = () => {
   if (!gameSession) {
     return (
       <div className="game-container">
-        <div className="game-error">No se pudo cargar la sesión de juego</div>
+        <Error errorMessage={"No se pudo cargar la sesión de juego."} handleBackToMenu={handleBackToMenu} />
       </div>
     );
   }
@@ -246,7 +231,7 @@ const Game = () => {
         />
         <Toaster
           toastOptions={{
-            className: "toast"
+            className: "toast",
           }}
         />
         <img

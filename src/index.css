@@ -17,4 +17,21 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /*Color variables*/
+
+  --background-light: #fff;
+  --text-dark: #000;
+  --text-light: #fff;
+
+  --letter-border-default: #d3d6da;
+  --letter-border-pending: #878a8c;
+  --letter-absent: #787c7e;
+  --letter-elsewhere: #c9b458;
+  --letter-correct: #6aaa64;
+
+  --action-button-bg: #10b981;
+  --action-button-bg-hover: #059669;
+
+  --header-icon-bg-hover: #cccccc;
 }

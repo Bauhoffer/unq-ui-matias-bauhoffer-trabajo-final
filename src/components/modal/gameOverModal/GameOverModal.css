@@ -35,12 +35,12 @@
 }
 
 .btn-play-again {
-  background-color: #10b981;
+  background-color: var(--action-button-bg);
   color: white;
 }
 
 .btn-play-again:hover {
-  background-color: #059669;
+  background-color: var(--action-button-bg-hover);
   transform: translateY(-2px);
 }
 

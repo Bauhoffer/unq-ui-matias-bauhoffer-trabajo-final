@@ -1,0 +1,33 @@
+.error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  text-align: center;
+}
+
+.error-container h2 {
+  color: #dc2626;
+  margin-bottom: 8px;
+}
+
+.error-container p {
+  color: #6b7280;
+  margin-bottom: 16px;
+}
+
+.error-action-button {
+  padding: 8px 16px;
+  background-color: var(--action-button-bg);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.error-action-button:hover {
+  background-color: var(--action-button-bg-hover);
+}
