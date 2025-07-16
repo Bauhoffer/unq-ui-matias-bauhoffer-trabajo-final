@@ -6,6 +6,7 @@ interface KeyProps {
   isSpecial?: boolean;
   width?: "wide";
   disabled?: boolean;
+  keyValue?: string;
 }
 
 export const Key = ({
@@ -14,12 +15,14 @@ export const Key = ({
   isSpecial = false,
   width,
   disabled = false,
+  keyValue,
 }: KeyProps) => {
   const handleClick = () => {
     if (disabled) return;
 
-    if (typeof letter === "string") {
-      onClick(letter);
+    const key = keyValue || (typeof letter === "string" ? letter : "");
+    if (key) {
+      onClick(key);
     }
   };
 

@@ -1,6 +1,7 @@
 import "./Keyboard.css";
 import { Key } from "./Key";
-
+import check from "../../assets/check.svg";
+import backspace from "../../assets/backspace.svg";
 interface KeyboardProps {
   onKeyPress: (key: string) => void;
   onEnter: () => void;
@@ -56,11 +57,12 @@ export const Keyboard = ({
 
       <div className="keyboard-row">
         <Key
-          letter="⌫"
-          onClick={() => handleKeyPress("BACKSPACE")}
+          letter={<img src={backspace} alt="backspace" className="backspace"/>}
+          onClick={handleKeyPress}
           isSpecial={true}
           width="wide"
           disabled={isLoading}
+          keyValue="BACKSPACE"
         />
         {thirdRow.map((letter) => (
           <Key 
@@ -74,12 +76,13 @@ export const Keyboard = ({
           letter={isLoading ? (
             <div className="spinner"></div>
           ) : (
-            "Enter"
+            <img src={check} alt="enter" className="enter"/>
           )}
-          onClick={() => handleKeyPress("ENTER")}
+          onClick={handleKeyPress}
           isSpecial={true}
           width="wide"
           disabled={isLoading}
+          keyValue="ENTER"
         />
       </div>
     </div>

@@ -65,36 +65,27 @@
 
 @media (max-width: 480px) {
   .key {
-    min-width: 30px;
-    height: 35px;
-    font-size: 12px;
-    padding: 0 4px;
+    min-width: 10px;
+    width: 20px;
+    height: 40px;
+    font-size: 14px;
+    padding: 0;
     margin: 1px;
   }
 
   .key-wide {
-    width: 50px;
+    width: 40px;
   }
 
   .key-special {
-    width: 45px;
+    width: 32px;
   }
 }
 
 @media (max-width: 320px) {
   .key {
-    min-width: 26px;
-    height: 32px;
     font-size: 11px;
     padding: 0 3px;
     margin: 0.5px;
-  }
-
-  .key-wide {
-    width: 42px;
-  }
-
-  .key-special {
-    width: 38px;
   }
 }

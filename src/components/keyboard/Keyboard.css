@@ -23,6 +23,16 @@
   pointer-events: none;
 }
 
+.backspace {
+  filter: invert(1);
+}
+
+.enter {
+  width: 20px;
+  height: 40px;
+  filter: invert(1);
+}
+
 .spinner {
   width: 16px;
   height: 16px;
@@ -34,8 +44,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 768px) {
@@ -43,7 +57,7 @@
     padding: 15px;
     gap: 5px;
   }
-  
+
   .keyboard-row {
     gap: 1px;
   }
@@ -54,9 +68,18 @@
     padding: 10px;
     gap: 4px;
   }
-  
+
   .keyboard-row {
     gap: 1px;
+  }
+
+  .backspace {
+    width: 15px;
+  }
+
+  .enter {
+    width: 20px;
+    height: 40px;
   }
 }
 
@@ -65,7 +88,7 @@
     padding: 8px;
     gap: 3px;
   }
-  
+
   .keyboard-row {
     gap: 0;
   }
